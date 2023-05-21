@@ -1,23 +1,29 @@
 const initialPrompt = `
-<p class = 'cardText'>Welcome to the joke generator.</p>
-<button class= 'main-btn'>Press to start laughing!</button>
+<p id='init-page' class = 'cardText'>Welcome to the joke generator.</p>
 `;
 
 function deliveryJoke(obj) {
   return `
-<p class='cardText'>${obj.setup}</p>
-<button class='main-btn'>???</button>
+<p id='joke-page' class='cardText'>${obj[0].setup}</p>
 `;
 }
 
 function deliveryPunch(obj) {
   return `
-<p class='cardText'>${obj.setup}</p>
-<p class='cardText'>${obj.delivery}</p>
-<button class='main-btn'>😆😆 Want another joke? 😆😆</button>
+<p id='punch-page' class='cardText'>${obj[0].setup}</p>
+<p class='cardText'>${obj[0].delivery}</p>
 `;
 }
 
+const htmlContainer = `
+<div id='joke-container'></div>
+<div id='punch-container'></div>
+`;
+
 export {
-  initialPrompt, deliveryJoke, deliveryPunch
+  initialPrompt, deliveryJoke, deliveryPunch, htmlContainer
 };
+
+// {/* <button id='start-btn' class='main-btn'>Press to start laughing!</button>
+// <button type='submit' id='joke-btn' class='main-btn'>???</button>
+// <button class='main-btn'>😆😆 Want another joke? 😆😆</button> */}
