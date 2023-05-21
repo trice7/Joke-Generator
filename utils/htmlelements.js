@@ -15,15 +15,6 @@ function deliveryPunch(obj) {
 `;
 }
 
-const htmlContainer = `
-<div id='joke-container'></div>
-<div id='punch-container'></div>
-`;
-
 export {
-  initialPrompt, deliveryJoke, deliveryPunch, htmlContainer
+  initialPrompt, deliveryJoke, deliveryPunch,
 };
-
-// {/* <button id='start-btn' class='main-btn'>Press to start laughing!</button>
-// <button type='submit' id='joke-btn' class='main-btn'>???</button>
-// <button class='main-btn'>😆😆 Want another joke? 😆😆</button> */}
