@@ -2,24 +2,47 @@
 // import ViewDirectorBasedOnUserAuthStatus from '../utils/viewDirector';
 import 'bootstrap'; // import bootstrap elements and js
 import '../styles/main.scss';
+import renderToDom from '../utils/functions';
+import {
+  initialPrompt, deliveryJoke, deliveryPunch,
+} from '../utils/htmlelements';
+import getRequest from '../api/promises';
+import mainButton from '../components/button';
+
+const joke = [];
+
+const pulledJoke = () => {
+  getRequest().then((item) => {
+    joke.push(item);
+  });
+};
+
+const cycle = () => {
+  document.querySelector('#main-btn').innerHTML = '???';
+  renderToDom('#app', deliveryJoke(joke));
+};
 
 const init = () => {
-  document.querySelector('#app').innerHTML = `
-    <h1>HELLO! You are up and running!</h1>
-    <small>Open your dev tools</small><br />
-    <button class="btn btn-danger" id="click-me">Click ME!</button><br />
-    <hr />
-    <h2>These are font awesome icons:</h2>
-    <i class="fas fa-user fa-4x"></i> <i class="fab fa-github-square fa-5x"></i>
-  `;
-  console.warn('YOU ARE UP AND RUNNING!');
-
-  document
-    .querySelector('#click-me')
-    .addEventListener('click', () => console.warn('You clicked that button!'));
-
-  // USE WITH FIREBASE AUTH
-  // ViewDirectorBasedOnUserAuthStatus();
+  joke.length = 0;
+  renderToDom('#app', '');
+  renderToDom('#btn-container', mainButton);
+  document.querySelector('#main-btn').innerHTML = 'Press to start laughing!';
+  renderToDom('#app', initialPrompt);
+  pulledJoke();
 };
 
 init();
+
+document.querySelector('#main-btn').addEventListener('click', () => {
+  if (document.querySelector('#init-page')) {
+    document.querySelector('#main-btn').innerHTML = '???';
+    document.querySelector('#app').innerHTML = deliveryJoke(joke);
+  } else if (document.querySelector('#joke-page')) {
+    document.querySelector('#main-btn').innerHTML = '😆😆 Want another joke?😆😆 ';
+    document.querySelector('#app').innerHTML = deliveryPunch(joke);
+    joke.length = 0;
+    pulledJoke();
+  } else if (document.querySelector('#punch-page')) {
+    cycle();
+  }
+});
